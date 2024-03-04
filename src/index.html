@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Montserrat"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <title>Homework 11</title>
+  </head>
+  <body>
+    <form class="search-form" autocomplete="off">
+      <label>
+        <input
+          class="search"
+          type="text"
+          placeholder="Search images..."
+          name="search"
+          autofocus
+        />
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+
+    <span class="loader"></span>
+
+    <ul class="gallery"></ul>
+
+    <script type="module" src="./main.js"></script>
+    <script type="module" src="./js/pixabay-api.js"></script>
+  </body>
+</html>
