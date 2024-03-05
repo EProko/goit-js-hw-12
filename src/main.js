@@ -119,6 +119,7 @@ function imgArray(response) {
   });
   renderPhoto(imagesArray, imagesList);
   lightboxInstance.refresh();
+
   hideLoader();
   showLoadBtn();
 }
