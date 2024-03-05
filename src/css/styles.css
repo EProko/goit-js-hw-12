@@ -57,6 +57,16 @@ button {
   letter-spacing: 0.04em;
 }
 
+button[data-action='load-more'] {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.is-hidden {
+  display: none;
+}
+
 button:hover {
   background: #6c8cff;
 }
