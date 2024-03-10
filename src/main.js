@@ -25,7 +25,6 @@ searchForm.addEventListener('submit', handleSubmit);
 let imagesArray = [];
 let query;
 let page = 1;
-const totalPages = 500 / 15;
 
 function handleSubmit(event) {
   event.preventDefault();
@@ -65,34 +64,27 @@ function handleSubmit(event) {
         hideLoadBtn();
         hideLoader();
       } else {
-        imgArray(response);
+        createImageArray(response);
         searchForm.reset();
       }
     })
     .catch(error => {
-      console.log(error);
+      alert(error.message);
       hideLoader();
     });
 }
 
 loadMoreBtn.addEventListener('click', renderMorePhoto);
 
-async function renderMorePhoto() {
-  if (page > totalPages) {
-    hideLoadBtn();
-    return iziToast.info({
-      position: 'topRight',
-      message: "We're sorry, but you've reached the end of search results.",
-    });
-  }
-
+function renderMorePhoto() {
   hideLoadBtn();
   showLoader();
 
-  page++;
-  await loadMorePhotos(query, page).then(response => {
-    imgArray(response);
-  });
+  loadMorePhotos(query)
+    .then(response => {
+      createImageArray(response);
+    })
+    .catch(error => alert(error.message));
 
   const heightCard = document.querySelector('.gallery-card');
   const rect = heightCard.getBoundingClientRect();
@@ -103,7 +95,7 @@ async function renderMorePhoto() {
   window.scrollBy(options);
 }
 
-function imgArray(response) {
+function createImageArray(response) {
   const hitsArray = response.data.hits;
 
   imagesArray = hitsArray.map(Object => {
@@ -120,8 +112,17 @@ function imgArray(response) {
   renderPhoto(imagesArray, imagesList);
   lightboxInstance.refresh();
 
-  hideLoader();
-  showLoadBtn();
+  if (hitsArray.length < 15) {
+    hideLoader();
+    hideLoadBtn();
+    iziToast.info({
+      position: 'topRight',
+      message: "We're sorry, but you've reached the end of search results.",
+    });
+  } else {
+    hideLoader();
+    showLoadBtn();
+  }
 }
 
 function showLoader() {
